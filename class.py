@@ -1,5 +1,6 @@
 import random
-sick = random.randint(0, 1)
+import time
+sick = random.randint(0, 4)
 class pet():
     def __init__(self, name, food, water):
         self.name = name
@@ -12,19 +13,19 @@ class pet():
         self.water += water
         print(self.water)
     def health(self):
-        if sick < 1:
+        if sick < 4:
             print("Healthy")
         else:
              print("Sick")
 
-
-
-        
-
 dog = pet("dog", 10, 0)
-dog.health()
 
 
+while dog.food > 0:
+    time.sleep(3)
+    dog.food -= 1
+    print(dog.food)
+    
 
 
 
