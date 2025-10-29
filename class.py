@@ -1,8 +1,8 @@
-"pip install keyboard"
+
 import random
 import time
 import threading
-import Keyboard
+
 sick = random.randint(0, 4)
 foodsupply = 0
 death = 0
@@ -53,8 +53,7 @@ def loop_thirst():
             print(f"{pet.name} is very thirsty!!!")
     print(f"{pet.name} was dehydrated. Game Over!")
 
-def loop_foodsupply():
-    while death < 1:
+
 
 
 thread_hunger = threading.Thread(target=loop_hunger)
@@ -63,3 +62,10 @@ thread_thirst = threading.Thread(target=loop_thirst)
 
 thread_hunger.start()
 thread_thirst.start()
+if input == 'z':
+    print("z")
+    
+
+
+
+
