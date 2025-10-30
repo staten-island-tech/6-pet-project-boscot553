@@ -2,8 +2,8 @@
 import random
 import time
 import threading
-
-sick = random.randint(0, 4)
+import keyboard
+sick = 0
 foodsupply = 0
 death = 0
 class pet():
@@ -53,7 +53,13 @@ def loop_thirst():
             print(f"{pet.name} is very thirsty!!!")
     print(f"{pet.name} was dehydrated. Game Over!")
 
-
+def loop_health():
+    while death != 1:
+        time.sleep(7)
+        sick = random.randint(0, 4)
+        if sick == 4:
+            inx = input(f"{pet.name} is sick. Type pneumonoultramicroscopicsilicovolcanoconiosis to cure him")
+            
 
 
 thread_hunger = threading.Thread(target=loop_hunger)
@@ -62,9 +68,17 @@ thread_thirst = threading.Thread(target=loop_thirst)
 
 thread_hunger.start()
 thread_thirst.start()
-if input == 'z':
-    print("z")
-    
+
+def my_function():
+    pet.food += 1
+    print(pet.food)
+
+keyboard.add_hotkey('p', my_function)
+keyboard.wait('esc')
+
+if death == 1:
+    pet.water = 0
+    pet.food = 0
 
 
 
