@@ -11,13 +11,6 @@ class pet():
         self.name = name
         self.food = food
         self.water = water
-    def addfood(self, food):
-        if foodsupply > food:
-            self.food += food
-            foodsupply -= food
-            print(f"You fed {pet.name} {food} food")
-        elif foodsupply < food:
-            print("Insuffieient amount of food. Spam E to get food.")
     def addwater(self, water):
         self.water += water
         print(self.water)
@@ -71,9 +64,18 @@ thread_thirst.start()
 
 def my_function():
     pet.food += 1
-    print(pet.food)
+    print(f"You fed {pet.name} 1 food")
+    time.sleep(3)
 
-keyboard.add_hotkey('p', my_function)
+def my_function2():
+    pet.water += 1
+    print(f"You gave {pet.name} 1 water")
+    time.sleep(3)
+
+keyboard.add_hotkey('z', my_function)
+
+
+keyboard.add_hotkey('x', my_function2)
 keyboard.wait('esc')
 
 if death == 1:
