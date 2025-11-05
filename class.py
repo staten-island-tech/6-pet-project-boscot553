@@ -5,7 +5,6 @@ import threading
 import keyboard
 sick = 0
 foodsupply = 0
-death = 0
 class pet():
     def __init__(self, name, food, water, happiness, hp):
         self.name = name
@@ -22,8 +21,10 @@ class pet():
         else:
              print("Sick")
 
-print("Welcome to this very cool pet game! Your goal is to make sure your pet survives as long as they can. They start with 10 food and 20 water. To view their stats, press q. To feed them food, press z. To give water, press x. Keep your pet happy by playing with it. Press p to play with it or l to take it for a walk. Keep in mind that your pet may get sick from time to time. First name your pet to begin! ")
+print("Welcome to this very cool but slightly difficult pet game! Your goal is to make sure your pet survives as long as they can. They start with 15 food and 20 water. To view their stats, press q. To feed them food, press z. To give water, press x. Keep your pet happy by playing with it. Press p to play with it or l to take it for a walk. Keep in mind that your pet may get sick from time to time. You may heal him over time by giving your pet food, water or pressing h. First name your pet to begin! ")
 Name = input("Name your pet  ")
+
+
 pet = pet(Name, 15, 20, 100, 100)
 
 
@@ -41,10 +42,10 @@ def loop_hunger():
             print(f"{pet.name} is starving!!!")
         if pet.food == 0:
             print(f"{pet.name} starved to death. Game Over!")
-            death = 1
+            pet.hp = 0
         if pet.food > 30:
             print(f"{pet.name} died by diabetes. Game Over!")
-            death = 1
+            pet.hp = 0
     
 
 def loop_thirst():
@@ -59,26 +60,33 @@ def loop_thirst():
             print(f"{pet.name} is very thirsty!!!")
         if pet.water == 0:
             print(f"{pet.name} was dehydrated. Game Over!")
-            death = 1
+            pet.hp = 0
         if pet.water > 30:
             print(f"{pet.name} was too hydrated. Game Over!")
-            death = 1
+            pet.hp = 0
 
 def loop_health():
     while pet.hp > 0:
-        time.sleep(3)
+        time.sleep(8)
         sick = random.randint(1, 6)
-        d = random.randint(1, 20)
-        if sick == 4:
+        d = random.randint(10, 30)
+        if sick == 6:
             print(f"{pet.name} got sick. -{d} hp")
             pet.hp -= d
             sick = 0
             
+def loop_timer():
+    timer = 0
+    while pet.hp > 0:
+        time.sleep(0.1)
+        timer += 0.1
+    print(timer)
+    
 def loop_hpcheck():
     while pet.hp > 0:
         if pet.hp < 1:
             print("Your pet died!!!")
-            death = 1
+            
 
 def loop_mood():
     while pet.hp > 0:
@@ -91,12 +99,14 @@ def loop_mood():
         elif pet.happiness == 50:
             print(f"{pet.name} is neutral")
         elif pet.happiness == 0:
-            print(f"{pet.name} fell from a high place. Game Over!")
+            print(f"{pet.name} didn't want to live anymore. Game Over!")
             pet.hp = 0
+
 def loop_event():
     while pet.hp > 0:
-        time.sleep(15)
-        r = random.randint(1, 8)
+        t = random.randint(10, 35)
+        time.sleep(t)
+        r = random.randint(1, 12)
         if r == 1:
             print(f"{pet.name} accidentally ate a piece of chcolate. Chocolate is like poison to dogs. -20 hp but +3 food")
             pet.food += 3
@@ -123,7 +133,8 @@ def loop_event():
             pet.hp -= 10
         elif r == 8:
             print(f"{pet.name} found a potion of instant health. +90 hp")
-            pet.hp -= 90
+            pet.hp += 90
+
 
 def my_function():
     pet.food += 1
@@ -141,34 +152,50 @@ def my_function3():
     print(f"Food: {pet.food}, Water: {pet.water}, Happiness: {pet.happiness}, Hp: {pet.hp}")
 
 def my_function4():
+    print(f"You played with {pet.name}")
     pet.happiness += 10
     pet.food -= 3
     pet.water -= 5
     pet.hp += 5
 
 def my_function5():
+    print(f"You took {pet.name} for a walk")
     pet.happiness += 20
     pet.food -= 5
     pet.water -= 8
     pet.hp += 5
+
+def my_function6():
+    if pet.hp < 100:
+        pet.hp += 20
+        print("+10 hp")
+        time.sleep(8)
+    elif pet.hp > 100:
+        print("Your pet's hp is at max. No healing required.")
+
+
 
 keyboard.add_hotkey('z', my_function)
 keyboard.add_hotkey('x', my_function2)
 keyboard.add_hotkey('q', my_function3)
 keyboard.add_hotkey('p', my_function4)
 keyboard.add_hotkey('l', my_function5)
+keyboard.add_hotkey('h', my_function6)
 
 thread_hunger = threading.Thread(target=loop_hunger)
 thread_thirst = threading.Thread(target=loop_thirst)
 thread_health = threading.Thread(target=loop_health)
 thread_hpcheck = threading.Thread(target=loop_hpcheck)
 thread_mood = threading.Thread(target=loop_mood)
+thread_event = threading.Thread(target=loop_event)
+thread_timer = threading.Thread(target=loop_timer)
 thread_hunger.start()
 thread_thirst.start()
 thread_health.start()
 thread_hpcheck.start()
 thread_mood.start()
-
+thread_event.start()
+thread_timer.start()
 
 
 
