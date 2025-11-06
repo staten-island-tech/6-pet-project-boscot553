@@ -4,7 +4,7 @@ import time
 import threading
 import keyboard
 sick = 0
-foodsupply = 0
+foodsupply = 2
 class pet():
     def __init__(self, name, food, water, happiness, hp):
         self.name = name
@@ -21,7 +21,7 @@ class pet():
         else:
              print("Sick")
 
-print("Welcome to this very cool but slightly difficult pet game! Your goal is to make sure your pet survives as long as they can. They start with 15 food and 20 water. To view their stats, press q. To feed them food, press z. To give water, press x. Keep your pet happy by playing with it. Press p to play with it or l to take it for a walk. Keep in mind that your pet may get sick from time to time. You may heal him over time by giving your pet food, water or pressing h. First name your pet to begin! ")
+print("Welcome to this very cool but slightly difficult pet game! Your goal is to make sure your pet survives as long as they can. They start with 15 food and 20 water. To view their stats, press q. To feed them food, press z. To give water, press x. Keep your pet happy by playing with it. Press p to play with it or l to take it for a walk. Keep in mind that your pet may get sick from time to time. You may heal him over time by giving your  pet food, water or pressing h. Most importantly, whatever you do, do not press k. First name your pet to begin! ")
 Name = input("Name your pet  ")
 
 
@@ -32,11 +32,13 @@ pet = pet(Name, 15, 20, 100, 100)
 
 def loop_hunger():
     while pet.hp > 0:
-        time.sleep(10)
+        if pet.hp < 1:
+            break
+        time.sleep(7)
         pet.food -= 1
         pet.hp -= 5
         print(f"Food: {pet.food}")
-        if pet.food == 5:
+        if pet.food == 7:
             print(f"{pet.name} is hungry")
         elif pet.food == 2:
             print(f"{pet.name} is starving!!!")
@@ -50,7 +52,9 @@ def loop_hunger():
 
 def loop_thirst():
     while pet.hp > 0:
-        time.sleep(7)
+        if pet.hp < 1:
+            break
+        time.sleep(5)
         pet.water -= 1
         pet.hp -= 3
         print(f"Water: {pet.water}")
@@ -68,8 +72,10 @@ def loop_thirst():
 def loop_health():
     while pet.hp > 0:
         time.sleep(8)
-        sick = random.randint(1, 6)
+        sick = random.randint(1, 8)
         d = random.randint(10, 30)
+        if pet.hp < 1:
+            break
         if sick == 6:
             print(f"{pet.name} got sick. -{d} hp")
             pet.hp -= d
@@ -80,18 +86,22 @@ def loop_timer():
     while pet.hp > 0:
         time.sleep(0.1)
         timer += 0.1
+    timer = round(timer, 1)
     print(timer)
-    
+
 def loop_hpcheck():
     while pet.hp > 0:
-        if pet.hp < 1:
-            print("Your pet died!!!")
+        if pet.hp > 100:
+            pet.hp = 100
+    print("Game Over")
             
 
 def loop_mood():
     while pet.hp > 0:
         time.sleep(2)
         pet.happiness -= 1
+        if pet.hp < 1:
+            break
         if pet.happiness == 30:
             print(f"{pet.name} is bored")
         elif pet.happiness == 10:
@@ -107,6 +117,8 @@ def loop_event():
         t = random.randint(10, 35)
         time.sleep(t)
         r = random.randint(1, 12)
+        if pet.hp < 1:
+            break
         if r == 1:
             print(f"{pet.name} accidentally ate a piece of chcolate. Chocolate is like poison to dogs. -20 hp but +3 food")
             pet.food += 3
@@ -119,11 +131,12 @@ def loop_event():
             pet.hp -= 10
         elif r == 4:
             print(f"{pet.name} got hit by a recless driver. -40 hp")
-            pet.hp -= 80
+            pet.hp -= 40
         elif r == 5:
             print(f"You won the lottery. You buy {pet.name} food. Max food + Max Water")
             pet.food = 25
             pet.water = 25
+            foodsupply == 2
         elif r == 6:
             print(f"{pet.name} got hit by a meteor. -50 hp")
             pet.hp -= 50
@@ -134,18 +147,24 @@ def loop_event():
         elif r == 8:
             print(f"{pet.name} found a potion of instant health. +90 hp")
             pet.hp += 90
-
+        elif r == 9:
+            print(f"{pet.name} found a mysterious mushroom. He ate it and got poisoned.")
+            pet.hp -= 20
+        elif r == 10:
+            print("You forgot to buy food for your pet today. You'll have to start rationing your food.")
+            foodsupply == 4
+        
 
 def my_function():
     pet.food += 1
     print(f"You fed {pet.name} 1 food. Food: {pet.food}")
-    pet.hp += 4
-    time.sleep(2)
+    pet.hp += 2
+    time.sleep(foodsupply)
 
 def my_function2():
     pet.water += 1
     print(f"You gave {pet.name} 1 water. Water: {pet.water}")
-    pet.hp += 4
+    pet.hp += 1
     time.sleep(0.5)
 
 def my_function3():
@@ -173,6 +192,11 @@ def my_function6():
     elif pet.hp > 100:
         print("Your pet's hp is at max. No healing required.")
 
+def my_function7():
+    print("Why did you eat your pet?")
+    pet.hp = 0
+
+
 
 
 keyboard.add_hotkey('z', my_function)
@@ -181,6 +205,7 @@ keyboard.add_hotkey('q', my_function3)
 keyboard.add_hotkey('p', my_function4)
 keyboard.add_hotkey('l', my_function5)
 keyboard.add_hotkey('h', my_function6)
+keyboard.add_hotkey('k', my_function7)
 
 thread_hunger = threading.Thread(target=loop_hunger)
 thread_thirst = threading.Thread(target=loop_thirst)
