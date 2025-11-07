@@ -1,4 +1,3 @@
-
 import random
 import time
 import threading
@@ -21,14 +20,26 @@ class pet():
         else:
              print("Sick")
 
+
+
 print("Welcome to this very cool but slightly difficult pet game! Your goal is to make sure your pet survives as long as they can. They start with 15 food and 20 water. To view their stats, press q. To feed them food, press z. To give water, press x. Keep your pet happy by playing with it. Press p to play with it or l to take it for a walk. Keep in mind that your pet may get sick from time to time. You may heal him over time by giving your  pet food, water or pressing h. Most importantly, whatever you do, do not press k. First name your pet to begin! ")
 Name = input("Name your pet  ")
 
+for i in range(9999999999):
+    int = 0
+    num = 0
+    for char in Name:
+        if Name[num].isnumeric():
+            int += 1
+        else:
+            num += 1
+    if int > 0:
+        Name = input("Invalid Name. Pick a new name  ")
+    else:
+        break
+    
 
 pet = pet(Name, 15, 20, 100, 100)
-
-
-
 
 def loop_hunger():
     while pet.hp > 0:
@@ -42,11 +53,11 @@ def loop_hunger():
             print(f"{pet.name} is hungry")
         elif pet.food == 2:
             print(f"{pet.name} is starving!!!")
-        if pet.food == 0:
-            print(f"{pet.name} starved to death. Game Over!")
+        if pet.food < 1:
+            print(f"{pet.name} starved to death. ")
             pet.hp = 0
         if pet.food > 30:
-            print(f"{pet.name} died by diabetes. Game Over!")
+            print(f"{pet.name} died by diabetes. ")
             pet.hp = 0
     
 
@@ -62,11 +73,11 @@ def loop_thirst():
             print(f"{pet.name} is thirsty")
         elif pet.water == 2:
             print(f"{pet.name} is very thirsty!!!")
-        if pet.water == 0:
-            print(f"{pet.name} was dehydrated. Game Over!")
+        if pet.water < 1:
+            print(f"{pet.name} was dehydrated.")
             pet.hp = 0
         if pet.water > 30:
-            print(f"{pet.name} was too hydrated. Game Over!")
+            print(f"{pet.name} was too hydrated.")
             pet.hp = 0
 
 def loop_health():
