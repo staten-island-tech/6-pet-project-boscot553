@@ -43,54 +43,47 @@ pet = pet(Name, 15, 20, 100, 100)
 
 def loop_hunger():
     while pet.hp > 0:
-        if pet.hp < 1:
-            break
-        time.sleep(7)
-        pet.food -= 1
-        pet.hp -= 5
-        print(f"Food: {pet.food}")
+        time.sleep(8)
+        if pet.hp > 0:
+            pet.food -= 1
+            pet.hp -= 5
+            print(f"Food: {pet.food}")
         if pet.food == 7:
             print(f"{pet.name} is hungry")
         elif pet.food == 2:
             print(f"{pet.name} is starving!!!")
-        if pet.food < 1:
-            print(f"{pet.name} starved to death. ")
-            pet.hp = 0
         if pet.food > 30:
             print(f"{pet.name} died by diabetes. ")
             pet.hp = 0
-    
+    pet.hp -= pet.hp
 
 def loop_thirst():
     while pet.hp > 0:
-        if pet.hp < 1:
-            break
-        time.sleep(5)
-        pet.water -= 1
-        pet.hp -= 3
-        print(f"Water: {pet.water}")
+        time.sleep(6)
+        if pet.hp > 0:
+            pet.water -= 1
+            pet.hp -= 3
+            print(f"Water: {pet.water}")
         if pet.water == 5:
             print(f"{pet.name} is thirsty")
         elif pet.water == 2:
             print(f"{pet.name} is very thirsty!!!")
-        if pet.water < 1:
-            print(f"{pet.name} was dehydrated.")
-            pet.hp = 0
         if pet.water > 30:
-            print(f"{pet.name} was too hydrated.")
+            print(f"{pet.name} was too hydrated. ")
             pet.hp = 0
+    pet.hp -= pet.hp
 
 def loop_health():
     while pet.hp > 0:
-        time.sleep(8)
-        sick = random.randint(1, 8)
-        d = random.randint(10, 30)
-        if pet.hp < 1:
-            break
-        if sick == 6:
+        time.sleep(10)
+        if pet.hp > 0:
+            sick = random.randint(1, 7)
+            d = random.randint(10, 25)
+        if sick == 7:
             print(f"{pet.name} got sick. -{d} hp")
             pet.hp -= d
             sick = 0
+        
             
 def loop_timer():
     timer = 0
@@ -105,14 +98,14 @@ def loop_hpcheck():
         if pet.hp > 100:
             pet.hp = 100
     print("Game Over")
-            
+
 
 def loop_mood():
     while pet.hp > 0:
-        time.sleep(2)
-        pet.happiness -= 1
         if pet.hp < 1:
             break
+        time.sleep(1.5)
+        pet.happiness -= 1
         if pet.happiness == 30:
             print(f"{pet.name} is bored")
         elif pet.happiness == 10:
@@ -156,56 +149,70 @@ def loop_event():
             pet.happiness += 20
             pet.hp -= 10
         elif r == 8:
-            print(f"{pet.name} found a potion of instant health. +90 hp")
-            pet.hp += 90
+            print(f"{pet.name} found a potion of instant health. +40 hp")
+            pet.hp += 40
         elif r == 9:
             print(f"{pet.name} found a mysterious mushroom. He ate it and got poisoned.")
             pet.hp -= 20
         elif r == 10:
             print("You forgot to buy food for your pet today. You'll have to start rationing your food.")
             foodsupply == 4
+        elif r == 11:
+            print(f"{pet.name} drank some poisonous water. ")
+            pet.hp -= 15
+            pet.water += 3
+        elif r == 12:
+            print(f"{pet.name} was hit by a boulder. ")
+            pet.hp -= 20
         
 
 def my_function():
-    pet.food += 1
-    print(f"You fed {pet.name} 1 food. Food: {pet.food}")
-    pet.hp += 2
-    time.sleep(foodsupply)
+    if pet.hp > 0:
+        pet.food += 1
+        print(f"You fed {pet.name} 1 food. Food: {pet.food}")
+        pet.hp += 2
+        time.sleep(foodsupply)
 
 def my_function2():
-    pet.water += 1
-    print(f"You gave {pet.name} 1 water. Water: {pet.water}")
-    pet.hp += 1
-    time.sleep(0.5)
+    if pet.hp > 0:
+        pet.water += 1
+        print(f"You gave {pet.name} 1 water. Water: {pet.water}")
+        pet.hp += 1
+        time.sleep(0.5)
 
 def my_function3():
-    print(f"Food: {pet.food}, Water: {pet.water}, Happiness: {pet.happiness}, Hp: {pet.hp}")
+    if pet.hp > 0:
+        print(f"Food: {pet.food}, Water: {pet.water}, Happiness: {pet.happiness}, Hp: {pet.hp}")
 
 def my_function4():
-    print(f"You played with {pet.name}")
-    pet.happiness += 10
-    pet.food -= 3
-    pet.water -= 5
-    pet.hp += 5
+    if pet.hp > 0:
+        print(f"You played with {pet.name}")
+        pet.happiness += 10
+        pet.food -= 3
+        pet.water -= 5
+        pet.hp += 5
 
 def my_function5():
-    print(f"You took {pet.name} for a walk")
-    pet.happiness += 20
-    pet.food -= 5
-    pet.water -= 8
-    pet.hp += 5
+    if pet.hp > 0:
+        print(f"You took {pet.name} for a walk")
+        pet.happiness += 20
+        pet.food -= 5
+        pet.water -= 8
+        pet.hp += 5
 
 def my_function6():
     if pet.hp < 100:
-        pet.hp += 20
-        print("+10 hp")
-        time.sleep(8)
+        if pet.hp > 0:
+            pet.hp += 20
+            print("+10 hp")
+            time.sleep(5)
     elif pet.hp > 100:
         print("Your pet's hp is at max. No healing required.")
 
 def my_function7():
-    print("Why did you eat your pet?")
-    pet.hp = 0
+    if pet.hp > 0:
+        print("Why did you eat your pet?")
+        pet.hp = 0
 
 
 
