@@ -4,23 +4,30 @@ import threading
 import keyboard
 sick = 0
 foodsupply = 2
-class pet():
+class pets():
     def __init__(self, name, food, water, happiness, hp):
         self.name = name
         self.food = food
         self.water = water
         self.happiness = happiness
         self.hp = hp
-    def addwater(self, water):
-        self.water += water
-        print(self.water)
-    def health(self):
-        if sick < 4:
-            print("Healthy")
-        else:
-             print("Sick")
-
-
+    def loop_hunger(self, food):
+        while pet.hp > 0:
+            time.sleep(8)
+            if self.hp > 0:
+                self.food -= 1
+                self.hp -= 5
+                print(f"Food: {self.food}")
+            if self.food == 7:
+                print(f"{self.name} is hungry")
+            elif self.food == 2:
+                print(f"{self.name} is starving!!!")
+            if self.food > 30:
+                print(f"{self.name} died by diabetes. ")
+                self.hp = 0
+            if self.food < 1:
+                self.hp = 0 
+    thread_hunger = threading.Thread(target=loop_hunger)
 
 print("Welcome to this very cool but slightly difficult pet game! Your goal is to make sure your pet survives as long as they can. They start with 15 food and 20 water. To view their stats, press q. To feed your food, press z.To give water, press x. Keep your pet happy by playing with it. Press p to play with it or l to take it for a walk. Keep in mind that your pet may get sick from time to time. You may heal your pet over time by giving  your  pet food, water or pressing h. Most importantly, whatever you do, do not press k. First name your pet to begin! ")
 Name = input("Name your pet  ")
@@ -39,24 +46,9 @@ for i in range(9999999999):
         break
     
 
-pet = pet(Name, 15, 20, 100, 100)
+pet = pets(Name, 15, 20, 100, 100)
 
-def loop_hunger():
-    while pet.hp > 0:
-        time.sleep(8)
-        if pet.hp > 0:
-            pet.food -= 1
-            pet.hp -= 5
-            print(f"Food: {pet.food}")
-        if pet.food == 7:
-            print(f"{pet.name} is hungry")
-        elif pet.food == 2:
-            print(f"{pet.name} is starving!!!")
-        if pet.food > 30:
-            print(f"{pet.name} died by diabetes. ")
-            pet.hp = 0
-        if pet.food < 1:
-            pet.hp = 0
+    
 
 def loop_thirst():
     while pet.hp > 0:
@@ -227,7 +219,7 @@ keyboard.add_hotkey('l', my_function5)
 keyboard.add_hotkey('h', my_function6)
 keyboard.add_hotkey('k', my_function7)
 
-thread_hunger = threading.Thread(target=loop_hunger)
+
 thread_thirst = threading.Thread(target=loop_thirst)
 thread_health = threading.Thread(target=loop_health)
 thread_hpcheck = threading.Thread(target=loop_hpcheck)
