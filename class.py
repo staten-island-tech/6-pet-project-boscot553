@@ -4,6 +4,7 @@ import threading
 import keyboard
 sick = 0
 foodsupply = 2
+useless_variable = 0
 class pet():
     def __init__(self, name, food, water, happiness, sanitation, hp):
         self.name = name
@@ -20,13 +21,89 @@ class pet():
             print("Healthy")
         else:
              print("Sick")
+    def feed(self):
+        if self.hp > 0:
+            self.food += 1
+            print(f"You fed {self.name} 1 food. Food: {self.food}")
+            self.hp += 2
+            time.sleep(foodsupply)
+    def drink(self):
+        if self.hp > 0:
+            self.water += 1
+            print(f"You gave {self.name} 1 water. Water: {self.water}")
+            self.hp += 1
+            time.sleep(0.5)
+    def view_stats(self):
+        if self.hp > 0:
+            print(f"Food: {self.food}, Water: {self.water}, Happiness: {self.happiness}, Cleanness: {self.sanitation}, Hp: {self.hp}")
+    def play(self):
+        if self.hp > 0 and self.food > 0 and self.water > 0:
+            print(f"You played with {self.name}")
+            self.happiness += 10
+            self.food -= 3
+            self.water -= 5
+            self.hp += 5
+            self.sanitation -= 5
+    def walk(self):
+        if self.hp > 0:
+            print(f"You took {self.name} for a walk")
+            self.happiness += 20
+            self.food -= 5
+            self.water -= 8
+            self.hp += 5
+            self.sanitation -= 10
+    def heal(self):
+        if self.hp < 100:
+            if self.hp > 0:
+                self.hp += 20
+                print("+10 hp")
+                time.sleep(5)
+    def Ummmm(self):
+        if self.hp > 0:
+            print("Why did you eat your pet?")
+            self.hp = 0
+    def wash(self):
+        if self.sanitation < 90:
+            self.sanitation += 10
+            self.happiness -= 10
+            print("You gave your pet a shower. +10 cleaness")
+    def loop_hunger(self):
+        while self.hp > 0:
+            time.sleep(8)
+            if self.hp > 0:
+                self.food -= 1
+                self.hp -= 5
+                print(f"Food: {self.food}")
+            if self.food == 7:
+                print(f"{self.name} is hungry")
+            elif self.food == 2:
+                print(f"{self.name} is starving!!!")
+            if self.food > 30:
+                print(f"{self.name} died by diabetes. ")
+                self.hp = 0
+            if self.food < 1:
+                self.hp = 0
+    def loop_thirst(self):
+        while self.hp > 0:
+            time.sleep(6)
+            if self.hp > 0:
+                self.water -= 1
+                self.hp -= 3
+                print(f"Water: {self.water}")
+            if self.water == 5:
+                print(f"{self.name} is thirsty")
+            elif self.water == 2:
+                print(f"{self.name} is very thirsty!!!")
+            if self.water > 30:
+                print(f"{self.name} was too hydrated. ")
+                self.hp = 0
+            if self.water < 1:
+                self.hp = 0
 
-
-
-print("Welcome to this very cool but slightly difficult pet game! Your goal is to make sure your pet survives as long as they can. They start with 15 food and 20 water. To view their stats, press q. To feed   your pet food, press z.To give water, press x. Keep your pet happy by playing with it. Press p to play with it or l to take it for a walk. Keep in mind that your pet may get sick from time to time. Also keeping your pet clean is essential because your pet's chances of getting sick increases drastically as his cleanness level decreases. To clean him, press c but keep in mind that your pet does not like taking baths. You may heal your pet over time by giving  your pet food, water or pressing h. Most importantly, whatever you do, do not press k. First name your pet to begin! ")
+print("Welcome to this very cool but slightly difficult pet game! Your goal is to make sure your pet survives as long as they can. They start with 15 food and 20 water. To view their stats, press q. To feed   your pet food,   press z.To give water, press x. Keep your pet happy by playing with it. Press p to play with it or l to take it for a walk. Keep in mind that your pet may get sick from time to time. Also keeping your pet clean is essential because your pet's chances of getting sick increases drastically as his cleanness level decreases. To clean him, press c but keep in mind that your pet does not like taking baths. You may heal your pet over time by giving  your pet food, water or pressing h. Most importantly, whatever you do, do not press k. First name your pet to begin! ")
 Name = input("Name your pet  ")
 
-for i in range(9999999999):
+while useless_variable == 0:
     int = 0
     num = 0
     for char in Name:
@@ -42,39 +119,9 @@ for i in range(9999999999):
 
 pet = pet(Name, 15, 20, 100, 100, 100)
 
-def loop_hunger():
-    while pet.hp > 0:
-        time.sleep(8)
-        if pet.hp > 0:
-            pet.food -= 1
-            pet.hp -= 5
-            print(f"Food: {pet.food}")
-        if pet.food == 7:
-            print(f"{pet.name} is hungry")
-        elif pet.food == 2:
-            print(f"{pet.name} is starving!!!")
-        if pet.food > 30:
-            print(f"{pet.name} died by diabetes. ")
-            pet.hp = 0
-        if pet.food < 1:
-            pet.hp = 0 
+ 
 
-def loop_thirst():
-    while pet.hp > 0:
-        time.sleep(6)
-        if pet.hp > 0:
-            pet.water -= 1
-            pet.hp -= 3
-            print(f"Water: {pet.water}")
-        if pet.water == 5:
-            print(f"{pet.name} is thirsty")
-        elif pet.water == 2:
-            print(f"{pet.name} is very thirsty!!!")
-        if pet.water > 30:
-            print(f"{pet.name} was too hydrated. ")
-            pet.hp = 0
-        if pet.water < 1:
-            pet.hp = 0
+
 
 def loop_health():
     while pet.hp > 0:
@@ -178,72 +225,20 @@ def loop_clean():
         time.sleep(1)
         pet.sanitation -= 1
 
-def my_function():
-    if pet.hp > 0:
-        pet.food += 1
-        print(f"You fed {pet.name} 1 food. Food: {pet.food}")
-        pet.hp += 2
-        time.sleep(foodsupply)
-
-def my_function2():
-    if pet.hp > 0:
-        pet.water += 1
-        print(f"You gave {pet.name} 1 water. Water: {pet.water}")
-        pet.hp += 1
-        time.sleep(0.5)
-
-def my_function3():
-    if pet.hp > 0:
-        print(f"Food: {pet.food}, Water: {pet.water}, Happiness: {pet.happiness}, Cleanness: {pet.sanitation}, Hp: {pet.hp}")
-
-def my_function4():
-    if pet.hp > 0 and pet.food > 0 and pet.water > 0:
-        print(f"You played with {pet.name}")
-        pet.happiness += 10
-        pet.food -= 3
-        pet.water -= 5
-        pet.hp += 5
-
-def my_function5():
-    if pet.hp > 0:
-        print(f"You took {pet.name} for a walk")
-        pet.happiness += 20
-        pet.food -= 5
-        pet.water -= 8
-        pet.hp += 5
-
-def my_function6():
-    if pet.hp < 100:
-        if pet.hp > 0:
-            pet.hp += 20
-            print("+10 hp")
-            time.sleep(5)
-    elif pet.hp > 100:
-        print("Your pet's hp is at max. No healing required.")
-
-def my_function7():
-    if pet.hp > 0:
-        print("Why did you eat your pet?")
-        pet.hp = 0
-
-def wash():
-    if pet.sanitation < 90:
-        pet.sanitation += 10
-        pet.happiness -= 10
-        print("You gave your pet a shower. +10 cleaness")
 
 
-keyboard.add_hotkey('z', my_function)
-keyboard.add_hotkey('x', my_function2)
-keyboard.add_hotkey('q', my_function3)
-keyboard.add_hotkey('p', my_function4)
-keyboard.add_hotkey('l', my_function5)
-keyboard.add_hotkey('h', my_function6)
-keyboard.add_hotkey('k', my_function7)
-keyboard.add_hotkey('c', wash)
 
-thread_hunger = threading.Thread(target=loop_hunger)
-thread_thirst = threading.Thread(target=loop_thirst)
+keyboard.add_hotkey('z', pet.feed)
+keyboard.add_hotkey('x', pet.drink)
+keyboard.add_hotkey('q', pet.view_stats)
+keyboard.add_hotkey('p', pet.play)
+keyboard.add_hotkey('l', pet.walk)
+keyboard.add_hotkey('h', pet.heal)
+keyboard.add_hotkey('k', pet.Ummmm)
+keyboard.add_hotkey('c', pet.wash)
+
+thread_hunger = threading.Thread(target=pet.loop_hunger)
+thread_thirst = threading.Thread(target=pet.loop_thirst)
 thread_health = threading.Thread(target=loop_health)
 thread_hpcheck = threading.Thread(target=loop_hpcheck)
 thread_mood = threading.Thread(target=loop_mood)
